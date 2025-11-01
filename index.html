@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consistoire de Woerth</title>
+
+<!-- Manifest pour PWA -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<!-- Apple / iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Consistoire de Woerth">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- Android / Chrome -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+<style>
+:root {
+  --bs-primary: var(--bs-indigo);
+  --bs-secondary: #b197fc;
+}
+
+.bg-primary { background-color: var(--bs-primary) !important; }
+.btn-primary { background-color: var(--bs-primary) !important; }
+
+#event-type:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(177, 151, 252, 0.25);
+  outline: none;
+}
+
+/* 🌟 Loader plein écran */
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: radial-gradient(circle at center, #ffffff 0%, #f0f0f0 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  text-align: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Animation du spinner */
+.loader-spinner {
+  width: 4rem;
+  height: 4rem;
+  border: 6px solid #ddd;
+  border-top-color: var(--bs-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loader-text {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.1rem;
+  color: #333;
+  max-width: 80%;
+  line-height: 1.6;
+}
+.loader-text small {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+    
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#content main {
+  flex: 1; /* le contenu principal prend toute la hauteur disponible */
+  display: flex;
+  flex-direction: column;
+}
+
+#content footer {
+  margin-top: auto; /* colle le footer au bas de la page */
+}
+
+</style>
+
+<script src="/javascript.js" defer></script>
+</head>
+<body>
+
+<!-- 🌟 Loader avec le verset biblique -->
+<div id="loader">
+  <div class="loader-spinner"></div>
+  <div class="loader-text">
+    « Je suis la lumière du monde. Celui qui me suit ne marchera pas dans les ténèbres,
+    mais il aura la lumière de la vie. »
+    <small>Jean 8, 12</small>
+  </div>
+</div>
+
+<!-- Contenu dynamique -->
+<div id="content"></div>
+
+<script>
+const remoteUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgqL83cuE_4GQCsXAlxEt1PPcML4UGHF7Gc4iqGpKh-OCJGrCG9AMMmmVOcg0kcr37XoPS-lzCfEpviLlKFHqOndM7RROTo3FOA3S1ZWoOu97KhQCxHcp4kCakkrrPieVHclu05GDQbEffUnIyrS_rjS-3ubO1aKlCfAloWQsHoKbnapFXEkNFRussj2dI-CztFYPEi4Rs1-v-Gl_FMu2jOKYZQerzP-jRjuRv5y73Cxf69C0L2WR0tHlRASopcceqWoCmFBUkehwyLbJ1AOTZM2kc99R-En2EvbEu6&lib=MBW7X4MvFpV2VMVyfD97uwAyuvEvazHFU";
+
+async function loadPage() {
+  const loader = document.getElementById("loader");
+  try {
+    const res = await fetch(remoteUrl);
+    if (!res.ok) throw new Error("Erreur HTTP " + res.status);
+
+    const html = await res.text();
+
+    // Injecter le HTML distant dans #content
+    const contentDiv = document.getElementById("content");
+    if (!contentDiv) throw new Error("Élément #content introuvable !");
+    contentDiv.innerHTML = html;
+
+    // ⚡ Exécuter tous les <script> du HTML injecté
+    const scripts = contentDiv.querySelectorAll("script");
+    scripts.forEach(oldScript => {
+      const newScript = document.createElement("script");
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
+        newScript.defer = true;
+      } else {
+        newScript.textContent = oldScript.textContent;
+      }
+      contentDiv.appendChild(newScript);
+      oldScript.remove();
+    });
+
+    // ⏳ Attendre un peu que les scripts injectés soient exécutés
+    setTimeout(() => {
+      // 1️⃣ Initialiser les événements si disponibles
+      if (typeof evenements !== "undefined") {
+        renderAccueil(evenements);
+        renderAgenda(evenements);
+        initFormulaireContact();
+      } else {
+        console.warn("Variable evenements non définie !");
+      }
+    }, 200);
+  } catch (err) {
+    console.error("Erreur lors du chargement :", err);
+    const content = document.getElementById("content");
+    if (content)
+      content.innerHTML =
+        "<p style='color:red;text-align:center;'>Impossible de charger la page.</p>";
+  } finally {
+    // Masquer le loader en douceur
+    setTimeout(() => loader.classList.add("hidden"), 300);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadPage);
+
+// Enregistrement du service worker PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log("Service Worker enregistré :", reg))
+      .catch(err => console.error("Erreur SW :", err));
+  });
+}
+</script>
+
+</body>
+</html>
