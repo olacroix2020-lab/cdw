@@ -137,12 +137,24 @@ html, body {
 <div id="content"></div>
 
 <script>
-const remoteUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgqL83cuE_4GQCsXAlxEt1PPcML4UGHF7Gc4iqGpKh-OCJGrCG9AMMmmVOcg0kcr37XoPS-lzCfEpviLlKFHqOndM7RROTo3FOA3S1ZWoOu97KhQCxHcp4kCakkrrPieVHclu05GDQbEffUnIyrS_rjS-3ubO1aKlCfAloWQsHoKbnapFXEkNFRussj2dI-CztFYPEi4Rs1-v-Gl_FMu2jOKYZQerzP-jRjuRv5y73Cxf69C0L2WR0tHlRASopcceqWoCmFBUkehwyLbJ1AOTZM2kc99R-En2EvbEu6&lib=MBW7X4MvFpV2VMVyfD97uwAyuvEvazHFU";
+// URL de base Google Apps Script sans paramètres changeants
+const baseRemoteUrl = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgqL83cuE_4GQCsXAlxEt1PPcML4UGHF7Gc4iqGpKh-OCJGrCG9AMMmmVOcg0kcr37XoPS-lzCfEpviLlKFHqOndM7RROTo3FOA3S1ZWoOu97KhQCxHcp4kCakkrrPieVHclu05GDQbEffUnIyrS_rjS-3ubO1aKlCfAloWQsHoKbnapFXEkNFRussj2dI-CztFYPEi4Rs1-v-Gl_FMu2jOKYZQerzP-jRjuRv5y73Cxf69C0L2WR0tHlRASopcceqWoCmFBUkehwyLbJ1AOTZM2kc99R-En2EvbEu6&lib=MBW7X4MvFpV2VMVyfD97uwAyuvEvazHFU";
 
 async function loadPage() {
   const loader = document.getElementById("loader");
   try {
-    const res = await fetch(remoteUrl);
+    // 🛠️ AJOUT ANTI-CACHE : Un paramètre unique & forçage de l'absence de cache dans le fetch
+    const timestamp = new Date().getTime();
+    const remoteUrlWithCacheBust = baseRemoteUrl + "&cb=" + timestamp;
+
+    const res = await fetch(remoteUrlWithCacheBust, {
+      cache: "no-store", // Ordonne au navigateur d'ignorer totalement son cache HTTP
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache'
+      }
+    });
+
     if (!res.ok) throw new Error("Erreur HTTP " + res.status);
 
     const html = await res.text();
@@ -152,12 +164,14 @@ async function loadPage() {
     if (!contentDiv) throw new Error("Élément #content introuvable !");
     contentDiv.innerHTML = html;
 
-    // ⚡ Exécuter tous les <script> du HTML injecté
+    // ⚡ Exécuter tous les <script> du HTML injecté et appliquer aussi le cache-busting s'ils ont des URLs
     const scripts = contentDiv.querySelectorAll("script");
     scripts.forEach(oldScript => {
       const newScript = document.createElement("script");
       if (oldScript.src) {
-        newScript.src = oldScript.src;
+        // Applique l'anti-cache aux scripts externes injectés
+        const scriptSeparator = oldScript.src.includes('?') ? '&' : '?';
+        newScript.src = oldScript.src + scriptSeparator + "v=" + timestamp;
         newScript.defer = true;
       } else {
         newScript.textContent = oldScript.textContent;
