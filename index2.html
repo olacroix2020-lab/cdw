@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />   
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Consistoire de Woerth</title>
+ 
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bs-primary: var(--bs-indigo);
+      --bs-secondary: #b197fc;
+    }
+    .bg-primary { background-color: var(--bs-primary) !important; }
+    .btn-primary { background-color: var(--bs-primary) !important; }
+     #event-type:focus {
+      border-color: var(--bs-primary);  
+      box-shadow: 0 0 0 0.25rem rgba(177, 151, 252, 0.25);  
+      outline: none;                       
+    }
+
+  </style>
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material&#43;Icons" rel="stylesheet" />
+
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+
+<script>
+  
+  const evenements = JSON.parse('[{\x22ts\x22:1791617400000,\x22dateFR\x22:\x22samedi 10 octobre\x22,\x22dateISO\x22:\x222026-10-10T07:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT1 Woerth\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1791705600000,\x22dateFR\x22:\x22dimanche 11 octobre\x22,\x22dateISO\x22:\x222026-10-11T08:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22Preuschdorf culte consistorial fête paroissiale \(salle des fêtes\)\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1791707400000,\x22dateFR\x22:\x22dimanche 11 octobre\x22,\x22dateISO\x22:\x222026-10-11T08:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1792000800000,\x22dateFR\x22:\x22mercredi 14 octobre\x22,\x22dateISO\x22:\x222026-10-14T18:00:00.000Z\x22,\x22heure\x22:\x2220:00\x22,\x22titre\x22:\x22Rencontre \\\x22Création, foi, espérance\\\x22\x22,\x22description\x22:\x22                  \x3cp\x3eDécouvrir la beauté du vivant, comprendre les transformations de notre monde et chercher ensemble des possibles…\x3c\/p\x3e\x3cp\x3eTrois soirées pour échanger, réfléchir et regarder autrement notre lien au vivant et à la Création.\x3c\/p\x3e\x3cp\x3e\x3ci\x3ePremière soirée : autour d’un film.\x3c\/i\x3e\x3c\/p\x3e\x3cp\x3eLa projection sera suivie d’un temps d’échange, pour ouvrir ensemble la réflexion et semer les premières graines.\x3c\/p\x3e\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Rencontre conviviale\x22,\x22hex\x22:\x22#a4bdfc\x22}]},{\x22ts\x22:1792224000000,\x22dateFR\x22:\x22samedi 17 octobre\x22,\x22dateISO\x22:\x222026-10-17T08:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22KT3 Preuschdorf\x22,\x22description\x22:\x22De 10h00 à 15h00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1792308600000,\x22dateFR\x22:\x22dimanche 18 octobre\x22,\x22dateISO\x22:\x222026-10-18T07:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22Lampertsloch\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1792308600000,\x22dateFR\x22:\x22dimanche 18 octobre\x22,\x22dateISO\x22:\x222026-10-18T07:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22Oberdorf Spachbach\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1792313100000,\x22dateFR\x22:\x22dimanche 18 octobre\x22,\x22dateISO\x22:\x222026-10-18T08:45:00.000Z\x22,\x22heure\x22:\x2210:45\x22,\x22titre\x22:\x22Climbach\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1792313100000,\x22dateFR\x22:\x22dimanche 18 octobre\x22,\x22dateISO\x22:\x222026-10-18T08:45:00.000Z\x22,\x22heure\x22:\x2210:45\x22,\x22titre\x22:\x22Mattstall\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1792328400000,\x22dateFR\x22:\x22dimanche 18 octobre\x22,\x22dateISO\x22:\x222026-10-18T13:00:00.000Z\x22,\x22heure\x22:\x2215:00\x22,\x22titre\x22:\x22Culte de reconnaissances des ministères UEPAL \(Marie-Claire\)\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1792918800000,\x22dateFR\x22:\x22dimanche 25 octobre\x22,\x22dateISO\x22:\x222026-10-25T09:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22Langensoultzbach culte consistorial et fête paroissiale : Réformation\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1793521800000,\x22dateFR\x22:\x22dimanche 1 novembre\x22,\x22dateISO\x22:\x222026-11-01T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22Wingen : Dimanche de l\x27éternité\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1793521800000,\x22dateFR\x22:\x22dimanche 1 novembre\x22,\x22dateISO\x22:\x222026-11-01T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22Woerth\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1793526300000,\x22dateFR\x22:\x22dimanche 1 novembre\x22,\x22dateISO\x22:\x222026-11-01T09:45:00.000Z\x22,\x22heure\x22:\x2210:45\x22,\x22titre\x22:\x22Mitschdorf\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1793526300000,\x22dateFR\x22:\x22dimanche 1 novembre\x22,\x22dateISO\x22:\x222026-11-01T09:45:00.000Z\x22,\x22heure\x22:\x2210:45\x22,\x22titre\x22:\x22Langensoultzbach : Dimanche de l\x27éternité\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1794040200000,\x22dateFR\x22:\x22samedi 7 novembre\x22,\x22dateISO\x22:\x222026-11-07T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT2 Woerth\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1794063600000,\x22dateFR\x22:\x22samedi 7 novembre\x22,\x22dateISO\x22:\x222026-11-07T15:00:00.000Z\x22,\x22heure\x22:\x2216:00\x22,\x22titre\x22:\x22culte pour les enfants à l\x27église de Woerth\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1794076200000,\x22dateFR\x22:\x22samedi 7 novembre\x22,\x22dateISO\x22:\x222026-11-07T18:30:00.000Z\x22,\x22heure\x22:\x2219:30\x22,\x22titre\x22:\x22culte autrement au foyer à Preuschdorf\x22,\x22description\x22:\x22\x22,\x22calendrier\x22:\x22plan de culte\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Culte\x22,\x22hex\x22:\x22#dc2127\x22}]},{\x22ts\x22:1794130200000,\x22dateFR\x22:\x22dimanche 8 novembre\x22,\x22dateISO\x22:\x222026-11-08T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1794645000000,\x22dateFR\x22:\x22samedi 14 novembre\x22,\x22dateISO\x22:\x222026-11-14T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT1 Langensoultzbach\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1794735000000,\x22dateFR\x22:\x22dimanche 15 novembre\x22,\x22dateISO\x22:\x222026-11-15T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1794853800000,\x22dateFR\x22:\x22lundi 16 novembre\x22,\x22dateISO\x22:\x222026-11-16T18:30:00.000Z\x22,\x22heure\x22:\x2219:30\x22,\x22titre\x22:\x22Groupe partage libre\x22,\x22description\x22:\x22Le passage biblique qui servira de support à nos discussions et réflexions se trouve dans l\x27évangile de Luc au chapítre 16 les versets 1 à 8.\\n\\nAu foyer de Preuschdorf, 46, rue de l\x27église. \\nDe 19h30 à 21h30.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Autour de la Bible\x22,\x22hex\x22:\x22#7ae7bf\x22}]},{\x22ts\x22:1795249800000,\x22dateFR\x22:\x22samedi 21 novembre\x22,\x22dateISO\x22:\x222026-11-21T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT3 Langensoultzbach\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1795339800000,\x22dateFR\x22:\x22dimanche 22 novembre\x22,\x22dateISO\x22:\x222026-11-22T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1795944600000,\x22dateFR\x22:\x22dimanche 29 novembre\x22,\x22dateISO\x22:\x222026-11-29T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1796459400000,\x22dateFR\x22:\x22samedi 5 décembre\x22,\x22dateISO\x22:\x222026-12-05T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT3 Preuschdorf\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1796549400000,\x22dateFR\x22:\x22dimanche 6 décembre\x22,\x22dateISO\x22:\x222026-12-06T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1796668200000,\x22dateFR\x22:\x22lundi 7 décembre\x22,\x22dateISO\x22:\x222026-12-07T18:30:00.000Z\x22,\x22heure\x22:\x2219:30\x22,\x22titre\x22:\x22Groupe partage libre\x22,\x22description\x22:\x22Le passage biblique qui servira de support à nos discussions et réflexions se trouve dans le livre de Jacques au chapítre 5 les versets 7 et 8.\\n\\nAu foyer de Preuschdorf, 46, rue de l\x27église. \\nDe 19h30 à 21h30.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Autour de la Bible\x22,\x22hex\x22:\x22#7ae7bf\x22}]},{\x22ts\x22:1797066000000,\x22dateFR\x22:\x22samedi 12 décembre\x22,\x22dateISO\x22:\x222026-12-12T09:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22KT2 Preuschdorf\x22,\x22description\x22:\x22De 10h00 à 15h00\\nBrico-Noël !\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1797154200000,\x22dateFR\x22:\x22dimanche 13 décembre\x22,\x22dateISO\x22:\x222026-12-13T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1797685200000,\x22dateFR\x22:\x22samedi 19 décembre\x22,\x22dateISO\x22:\x222026-12-19T13:00:00.000Z\x22,\x22heure\x22:\x2214:00\x22,\x22titre\x22:\x22KT1 Oberdorf-Spachbach\x22,\x22description\x22:\x22De 14h00 à 19h00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1799483400000,\x22dateFR\x22:\x22samedi 9 janvier\x22,\x22dateISO\x22:\x222027-01-09T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT2 Preuschdorf\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1799573400000,\x22dateFR\x22:\x22dimanche 10 janvier\x22,\x22dateISO\x22:\x222027-01-10T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1800090000000,\x22dateFR\x22:\x22samedi 16 janvier\x22,\x22dateISO\x22:\x222027-01-16T09:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22KT1 Preuschdorf\x22,\x22description\x22:\x22De 10h00 à 15h00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1800178200000,\x22dateFR\x22:\x22dimanche 17 janvier\x22,\x22dateISO\x22:\x222027-01-17T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1800693000000,\x22dateFR\x22:\x22samedi 23 janvier\x22,\x22dateISO\x22:\x222027-01-23T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT3 Preuschdorf\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1800783000000,\x22dateFR\x22:\x22dimanche 24 janvier\x22,\x22dateISO\x22:\x222027-01-24T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1801387800000,\x22dateFR\x22:\x22dimanche 31 janvier\x22,\x22dateISO\x22:\x222027-01-31T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1801902600000,\x22dateFR\x22:\x22samedi 6 février\x22,\x22dateISO\x22:\x222027-02-06T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT1 Preuschdorf\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1801992600000,\x22dateFR\x22:\x22dimanche 7 février\x22,\x22dateISO\x22:\x222027-02-07T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1802286000000,\x22dateFR\x22:\x22mercredi 10 février\x22,\x22dateISO\x22:\x222027-02-10T19:00:00.000Z\x22,\x22heure\x22:\x2220:00\x22,\x22titre\x22:\x22Rencontre \\\x22Création, foi, espérance\\\x22\x22,\x22description\x22:\x22                  \x3cp\x3eDécouvrir la beauté du vivant, comprendre les transformations de notre monde et chercher ensemble des possibles…\x3c\/p\x3e\x3cp\x3eTrois soirées pour échanger, réfléchir et regarder autrement notre lien au vivant et à la Création.\x3c\/p\x3e\x3cp\x3e\x3ci\x3eDeuxième soirée : Et si le Carême était aussi un chemin pour prendre soin de la Création ?\x3c\/i\x3e\x3c\/p\x3e\x3cp\x3eUn temps pour cheminer ensemble et semer de nouvelles graines.\x3c\/p\x3e\x3cp\x3e\x3cbr\x3e\x3c\/p\x3e\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Rencontre conviviale\x22,\x22hex\x22:\x22#a4bdfc\x22}]},{\x22ts\x22:1802509200000,\x22dateFR\x22:\x22samedi 13 février\x22,\x22dateISO\x22:\x222027-02-13T09:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22KT2 Preuschdorf\x22,\x22description\x22:\x22De 10h00 à 15h00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1802597400000,\x22dateFR\x22:\x22dimanche 14 février\x22,\x22dateISO\x22:\x222027-02-14T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1803112200000,\x22dateFR\x22:\x22samedi 20 février\x22,\x22dateISO\x22:\x222027-02-20T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT3 Preuschdorf\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1804321800000,\x22dateFR\x22:\x22samedi 6 mars\x22,\x22dateISO\x22:\x222027-03-06T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT2 Langensoultzbach\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1804926600000,\x22dateFR\x22:\x22samedi 13 mars\x22,\x22dateISO\x22:\x222027-03-13T08:30:00.000Z\x22,\x22heure\x22:\x2209:30\x22,\x22titre\x22:\x22KT1 Langensoultzbach\x22,\x22description\x22:\x22De 09:30:00 à 11:30:00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1805016600000,\x22dateFR\x22:\x22dimanche 14 mars\x22,\x22dateISO\x22:\x222027-03-14T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1805533200000,\x22dateFR\x22:\x22samedi 20 mars\x22,\x22dateISO\x22:\x222027-03-20T09:00:00.000Z\x22,\x22heure\x22:\x2210:00\x22,\x22titre\x22:\x22KT3 Langensoultzbach\x22,\x22description\x22:\x22De 10h00 à 15h00\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Catéchisme\x22,\x22hex\x22:\x22#fbd75b\x22}]},{\x22ts\x22:1805621400000,\x22dateFR\x22:\x22dimanche 21 mars\x22,\x22dateISO\x22:\x222027-03-21T09:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1806222600000,\x22dateFR\x22:\x22dimanche 28 mars\x22,\x22dateISO\x22:\x222027-03-28T08:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]},{\x22ts\x22:1806827400000,\x22dateFR\x22:\x22dimanche 4 avril\x22,\x22dateISO\x22:\x222027-04-04T08:30:00.000Z\x22,\x22heure\x22:\x2210:30\x22,\x22titre\x22:\x22Ecole du dimanche - Foyer de Preuschdorf\x22,\x22description\x22:\x22Pour tout renseignement contacter Natalie Pequignot. Au 06 82 32 94 05.\x22,\x22calendrier\x22:\x22consistoiredewoerth@gmail.com\x22,\x22couleurs\x22:[{\x22nom\x22:\x22Activité jeunesse\x22,\x22hex\x22:\x22#dbadff\x22}]}]');
+  var liens = [{"nom":"Accueil","page":"accueil.html"},{"nom":"Agenda","page":"agenda.html"},{"nom":"Contact","page":"contact.html"},{"nom":"Inscription catéchisme","page":"https://tinyurl.com/inscription-kt"},{"nom":"Don","page":"don.html"}];
+  console.log("JS version: 1791399828164");
+</script>
+
+
+<div class="text-uppercase fw-medium text-muted text-center"
+     style="letter-spacing: 0.05em; line-height: 1.2; padding: 0.25rem 1rem; margin-bottom: 0; font-size: clamp(0.4rem, 2vw, 0.8rem);">
+  Union des Églises protestantes d'Alsace et de Lorraine
+</div>
+
+
+<header id="header" class="bg-primary border-bottom shadow-sm">
+  <nav class="navbar navbar-expand-md bg-primary px-4">
+    <span class="navbar-brand mb-0 fs-4 text-white fw-bold">Consistoire de Woerth</span>
+
+    
+    <button class="navbar-toggler border border-3 rounded-5" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+    </button>
+
+    
+    <div class="collapse navbar-collapse justify-content-center" id="navbarContent">
+      <ul class="navbar-nav">
+                  <li class="nav-item">
+            <a class="nav-link text-white"
+               href="#"
+               onclick="chargerPage('Accueil', 'accueil.html')">
+              Accueil            </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-white"
+               href="#"
+               onclick="chargerPage('Agenda', 'agenda.html')">
+              Agenda            </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-white"
+               href="#"
+               onclick="chargerPage('Contact', 'contact.html')">
+              Contact            </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-white"
+               href="#"
+               onclick="chargerPage('Inscription catéchisme', 'https:\/\/tinyurl.com\/inscription-kt')">
+              Inscription catéchisme            </a>
+          </li>
+                  <li class="nav-item">
+            <a class="nav-link text-white"
+               href="#"
+               onclick="chargerPage('Don', 'don.html')">
+              Don            </a>
+          </li>
+              </ul>
+    </div>
+  </nav>
+</header>
+
+
+<main id="corps" class="container py-4 flex-grow-1">
+  <section id="accueil" class="py-4" style="display:block;">
+  <div class="container">
+    <h2 class="text-dark text-center fw-bold mb-4">Bienvenue</h2>
+    <div id="accueil-cards" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 align-items-stretch"></div>
+
+    <div class="text-center mt-4">
+      <a href="#" onclick="chargerPage('agenda')"
+         class="btn d-inline-flex align-items-center justify-content-center"
+         style="border: 1px solid #3b82f6; color: #1e3a8a; background-color: transparent;"
+         onmouseover="this.style.backgroundColor='#e0e7ff';"
+         onmouseout="this.style.backgroundColor='transparent';">
+        <i class="material-icons me-1" style="font-size: 1.2em;">calendar_month</i>
+        Voir l'agenda complet
+      </a>
+    </div>
+  </div>
+</section>
+  <section id="agenda" class="py-4 d-none">
+  <div class="container">
+    <h2 class="text-dark text-center fw-bold mb-4">L'agenda du consistoire</h2>
+
+    
+    <div class="mb-4">
+      <div class="row align-items-center g-2">
+        <div class="col-auto">
+          <label for="event-type" class="form-label mb-0">Filtrer :</label>
+        </div>
+        <div class="col">
+          <select id="event-type" class="form-select border border-3 border-primary">
+            <option value="">Tous les événements</option>
+            <option value="Culte">Culte</option>
+            <option value="Rencontre conviviale">Rencontre conviviale</option>
+            <option value="Autour de la Bible">Autour de la Bible</option>
+            <option value="Activité jeunesse">Activité jeunesse</option>
+            <option value="Catéchisme">Catéchisme</option>
+            <option value="Sortie">Sortie</option>
+            <option value="Culturel">Culturel</option>
+            <option value="Divers">Divers</option>
+            
+          </select>
+        </div>
+      </div>
+    </div>
+
+    
+    <div id="agenda-content"></div>
+  </div>
+
+  <style>
+  
+    
+     
+   
+
+
+  </style>
+
+
+</section>
+  <section id="contact" style="display: none;">
+  <div class="container py-5">
+    <h2 class="text-center mb-4 text-dark fw-bold">📩 Nous contacter</h2>
+
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm border-1 rounded-3 border-primary">
+          <div class="card-body p-4">
+
+            <form id="contactForm" novalidate>
+              
+              <div class="mb-3">
+                <label for="nom" class="form-label fw-semibold">Nom complet</label>
+                <input type="text" id="nom" name="nom" class="form-control border border-2" placeholder="Votre nom" required>
+                <div class="invalid-feedback">Veuillez saisir votre nom.</div>
+              </div>
+
+              
+              <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Adresse e-mail</label>
+                <input type="email" id="email" name="email" class="form-control border border-2" placeholder="votre@email.com" required>
+                <div class="invalid-feedback">Veuillez saisir une adresse e-mail valide.</div>
+              </div>
+
+              
+              <div class="mb-3">
+                <label for="message" class="form-label fw-semibold">Votre message</label>
+                <textarea id="message" name="message" rows="5" class="form-control border border-2" placeholder="Votre message ici..." required></textarea>
+                <div class="invalid-feedback">Veuillez écrire un message.</div>
+              </div>
+
+              
+              <div class="visually-hidden">
+                <input type="text" id="antiBot" name="antiBot" value="">
+              </div>
+
+              
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg fw-semibold">
+                  Envoyer le message
+                </button>
+              </div>
+            </form>
+
+            
+            <div id="resultat" class="mt-4 text-center fw-semibold"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <section id="don" class="events-section d-none py-4">
+  <div class="container">
+    <h2 class="section-title">Soutenir nos paroisses</h2>
+
+    <div class="event-card border-start border-4 border-primary p-3 mb-4 rounded">
+      <div class="event-body">
+        <blockquote class="blockquote fst-italic mb-4">
+          "Faire rayonner l'Évangile, c'est vivre en témoins de l'amour inconditionnel de Dieu."
+        </blockquote>
+
+        <p class="event-description">
+          Au quotidien, sans relâche, nos paroisses, services et partenaires œuvrent pour inscrire pleinement cette « bonne nouvelle » dans la vie de tous les jours et l'ouvrir à toute personne, quelle qu'elle soit.
+        </p>
+
+        <h3 class="subsection-title mt-4">Don en ligne à nos paroisses :</h3>
+
+        <ul class="don-list list-unstyled ps-0">
+          <li><a href="https://uepal.iraiser.eu/morsbronn/" target="_blank" rel="noopener noreferrer">Paroisse de Morsbronn-les-Bains</a></li>
+          <li><a href="https://uepal.iraiser.eu/woerth/" target="_blank" rel="noopener noreferrer">Paroisse de Woerth Oberdorf Spachbach</a></li>
+          <li><a href="https://uepal.iraiser.eu/froeschwiller/" target="_blank" rel="noopener noreferrer">Paroisse de Froeschwiller</a></li>
+          <li><a href="https://uepal.iraiser.eu/langensoultzbach/" target="_blank" rel="noopener noreferrer">Paroisse de Langensoultzbach</a></li>
+          <li><a href="https://uepal.iraiser.eu/goersdorf/" target="_blank" rel="noopener noreferrer">Paroisse de Goersdorf</a></li>
+          <li><a href="https://uepal.iraiser.eu/preuschdorf-lampertsloch/" target="_blank" rel="noopener noreferrer">Paroisse de Preuschdorf-Lampertsloch</a></li>
+          <li><a href="https://uepal.iraiser.eu/b?cid=245⟨=fr_FR" target="_blank" rel="noopener noreferrer">Paroisse de Lembach</a></li>
+          <li><a href="https://uepal.iraiser.eu/b?cid=108⟨=fr_FR" target="_blank" rel="noopener noreferrer">Paroisse de Wingen</a></li>
+        </ul>
+
+        <div class="don-tax-info mt-4">
+          <h4>Déductions fiscales</h4>
+          <p>
+            Tous les dons effectués à votre paroisse sont déductibles de l'impôt sur le revenu à hauteur de 66 % de votre don, plafonné à 20 % de votre revenu net imposable.
+            Un don de 100 € vous coûtera 34 € si vous êtes imposable.
+          </p>
+          <p>
+            Si vous êtes imposables sur la fortune immobilière, vous pouvez également bénéficier de réductions fiscales, contactez votre conseiller presbytéral.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+
+<footer class="bg-primary text-white py-3 mt-auto" >
+  <div class="container">
+    <div class="row align-items-start">
+
+      
+      <div class="col-12 col-lg text-center order-0 order-lg-0">
+        <div class="d-flex justify-content-center flex-wrap gap-4 mb-2">
+          <span>Consistoire de Woerth</span>
+          <span><i class="material-icons align-middle">phone</i> 07 83 29 42 27</span>
+        </div>
+        <div class="d-flex justify-content-center flex-wrap gap-4 mb-2">
+          <span><i class="material-icons align-middle">place</i> 70 grand rue, 67360 Woerth</span>
+          <span><i class="material-icons align-middle">email</i> consistoiredewoerth@gmail.com</span>
+        </div>
+        <div>
+          <small>UEPAL • Union des Églises protestantes d'Alsace et de Lorraine</small>
+        </div>
+      </div>
+
+      
+      <div class="col-12 col-lg-auto d-flex justify-content-center justify-content-lg-start mt-3 mt-lg-0 order-1 order-lg-1" style="margin-bottom: 100px;">
+        <img
+          src="https://lh3.googleusercontent.com/d/1YHD2Jm1DiFbDlcMeiEl6WoUyt9hAIF0x"
+          alt="Logo"
+          class="img-fluid"
+          style="height: 80px;"
+        />
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
+<button onclick="window.location.href='#header'" aria-label="Remonter en haut"
+        class="btn position-fixed shadow-sm"
+        style="bottom: 6.5rem; right: 1.25rem; z-index: 1050; border-radius: 50%; background-color: #c7d2fe; color: #1e1b4b; border: 1px solid #a5b4fc; transition: all 0.2s ease;"
+        onmouseover="this.style.backgroundColor='#e0e7ff'; this.style.borderColor='#c7d2fe';"
+        onmouseout="this.style.backgroundColor='#c7d2fe'; this.style.borderColor='#a5b4fc';">
+  ↑
+</button>
+
+
+<script>
+
+
+
+function normalize(s) { return (s||"").toLowerCase().trim(); }
+
+
+
+
+function chargerPage(nom, page) {
+  document.querySelectorAll('#corps > section').forEach(section => {
+    section.classList.add('d-none');
+    section.classList.remove('d-block');
+  });
+
+  try {
+    new URL(page);
+    window.open(page, "_blank", "noopener,noreferrer");
+  } catch(e) {
+    const section = document.getElementById(nom.toLowerCase());
+    if(section) {
+      section.classList.remove('d-none');
+      section.classList.add('d-block');
+    } else console.warn("Section introuvable:", nom);
+  }
+}
+
+
+
+
+function showNoEventsMessage(container) {
+  container.innerHTML = '';
+
+  
+  const wrapper = document.createElement('div');
+  wrapper.className = 'd-flex justify-content-center w-100 mt-4';
+
+  
+  const alertWrapper = document.createElement('div');
+  alertWrapper.className = 'alert d-inline-flex align-items-center text-dark border border-primary';
+  alertWrapper.setAttribute('role','alert');
+  alertWrapper.style.backgroundColor = '#e0e7ff';  
+
+  
+  const icon = document.createElement('i');
+  icon.className = 'material-icons me-2 text-dark';
+  icon.textContent = 'event_available';
+  alertWrapper.appendChild(icon);
+
+  
+  const text = document.createElement('span');
+  text.textContent = 'Aucun événement à venir.';
+  alertWrapper.appendChild(text);
+
+  wrapper.appendChild(alertWrapper);
+  container.appendChild(wrapper);
+}
+
+
+
+
+function createCard(event) {
+  const cardWrapper = document.createElement('div');
+  cardWrapper.className = 'col';
+
+  const importantClass = event.important ? "border-warning" : "";
+  const card = document.createElement('div');
+  card.className = `card h-100 shadow bg-body-tertiary ${importantClass}`;
+  card.style.display = 'flex';
+  card.style.flexDirection = 'column';
+
+  
+  const header = document.createElement('div');
+  header.className =
+    'card-header bg-white border-0 d-flex justify-content-between align-items-center';
+  header.innerHTML = `
+    <span class="text-primary fw-semibold text-uppercase">${event.dateFR}</span>
+    <div class="text-muted d-flex align-items-center gap-1">
+      <i class="material-icons" style="font-size:1rem;">schedule</i>
+      <span class="fw-bold text-dark">${event.heure}</span>
+    </div>`;
+  card.appendChild(header);
+
+  
+  const body = document.createElement('div');
+  body.className = 'card-body d-flex flex-column';
+
+  const titre = document.createElement('h5');
+  titre.className = 'card-title text-dark';
+  titre.textContent = event.titre
+    ? event.titre.charAt(0).toUpperCase() + event.titre.slice(1)
+    : '';
+  body.appendChild(titre);
+
+  
+  if (event.description && event.description !== "Aucune description") {
+    const fullText =
+      event.description.charAt(0).toUpperCase() + event.description.slice(1);
+
+    const desc = document.createElement('p');
+    desc.className = 'card-text text-secondary mb-2 description';
+    desc.innerHTML = fullText;
+    desc.style.overflow = 'hidden';
+    body.appendChild(desc);
+
+    let btn = null;
+    let expanded = false;
+    let maxHeight = 0;
+    let truncatedText = '';
+
+    
+    const binaryTruncate = (text, maxHeight) => {
+      let min = 0;
+      let max = text.length;
+      let truncated = text;
+
+      while (min < max) {
+        const mid = Math.floor((min + max) / 2);
+        desc.innerHTML = text.slice(0, mid) + '...';
+        if (desc.scrollHeight > maxHeight) {
+          max = mid;
+        } else {
+          min = mid + 1;
+          truncated = desc.textContent;
+        }
+      }
+
+      return truncated;
+    };
+
+    const clampText = () => {
+  const lineHeight = parseFloat(getComputedStyle(desc).lineHeight);
+  if (!lineHeight) return;
+
+  maxHeight = lineHeight * 3;
+
+  
+  desc.style.maxHeight = 'none';
+  desc.innerHTML = fullText;
+
+  
+  if (desc.scrollHeight <= maxHeight) {
+    desc.style.maxHeight = 'none';
+    desc.innerHTML = fullText;
+    if (btn) {
+      btn.remove();
+      btn = null;
+    }
+    expanded = false; 
+    return;
+  }
+
+  
+  if (!expanded) {
+    truncatedText = binaryTruncate(fullText, maxHeight);
+    desc.style.maxHeight = `${maxHeight}px`;
+    desc.innerHTML = truncatedText;
+  } else {
+    
+    desc.style.maxHeight = 'none';
+    desc.innerHTML = fullText;
+  }
+
+  
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.className =
+      'btn btn-link p-0 text-decoration-none text-primary small see-more-btn';
+    btn.type = 'button';
+
+    btn.onclick = () => {
+      expanded = !expanded;
+      clampText();
+      btn.textContent = expanded ? 'Moins' : 'Suite';
+    };
+
+    body.appendChild(btn);
+  }
+
+  btn.textContent = expanded ? 'Moins' : 'Suite';
+};
+
+
+    
+    const initClamp = () => {
+      clampText();
+
+      
+      let resizeTimeout = null;
+      window.addEventListener('resize', () => {
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(clampText, 150);
+      });
+    };
+
+    
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          initClamp();
+          io.disconnect();
+        }
+      });
+      io.observe(desc);
+
+      
+      setTimeout(initClamp, 300);
+    } else {
+      
+      setTimeout(initClamp, 0);
+    }
+  }
+
+  card.appendChild(body);
+
+  
+  const footer = document.createElement('div');
+  footer.className =
+    'card-footer bg-white border-0 pt-2 mt-auto d-flex flex-wrap gap-1';
+
+  if (event.couleurs && event.couleurs.length > 0) {
+    event.couleurs.forEach(cat => {
+      const badge = document.createElement('span');
+      badge.className = 'badge text-white';
+      badge.style.backgroundColor = cat.hex;
+      badge.textContent = cat.nom;
+      footer.appendChild(badge);
+    });
+  } else {
+    const badge = document.createElement('span');
+    badge.className = 'badge text-white';
+    badge.style.backgroundColor = '#0d6efd';
+    badge.textContent = 'Général';
+    footer.appendChild(badge);
+  }
+
+  card.appendChild(footer);
+  cardWrapper.appendChild(card);
+
+  return cardWrapper;
+}
+
+
+
+
+
+
+
+
+function renderAccueil(allEvents, jours = 8) {
+  const container = document.getElementById('accueil-cards');
+  container.innerHTML = '';
+
+  
+  const maintenant = new Date();
+  const debutJournee = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate()).getTime();
+
+  
+  const limite = debutJournee + jours * 24 * 60 * 60 * 1000;
+
+  
+  const events = allEvents.filter(ev => ev.ts >= debutJournee && ev.ts <= limite);
+
+  if (!events.length) {
+    showNoEventsMessage(container, 'Aucun événement à venir cette semaine.');
+    return;
+  }
+
+  events.forEach(ev => container.appendChild(createCard(ev)));
+}
+
+
+
+
+
+function renderAgenda(allEvents) {
+  const selecteur = document.getElementById('event-type');
+  const agendaContent = document.getElementById('agenda-content');
+
+  function showEvents(events) {
+    agendaContent.innerHTML = '';
+    if(!events.length) {
+      showNoEventsMessage(agendaContent);
+      return;
+    }
+
+    const months = {};
+    events.forEach(ev => {
+      const key = ev.dateISO ? ev.dateISO.slice(0,7) : 'Inconnu';
+      if(!months[key]) months[key] = [];
+      months[key].push(ev);
+    });
+
+    Object.keys(months).sort().forEach(key => {
+      const section = document.createElement('div');
+      section.className = 'month-section';
+      section.style.marginBottom = '3rem';
+
+      
+      const title = document.createElement('div');
+      title.className = 'month-title';
+      title.style.borderTop = '2px solid #dee2e6';
+      title.style.paddingTop = '0.25rem';
+      title.style.marginBottom = '1rem';
+      title.style.fontSize = '1.5rem';
+      title.style.fontWeight = 'bold';
+      title.style.textTransform = 'capitalize';
+      
+      if(key === 'Inconnu') title.textContent = 'Inconnu';
+      else {
+        const [year, month] = key.split('-');
+        const date = new Date(year, month-1);
+        title.textContent = date.toLocaleDateString('fr-FR', { month:'long', year: 'numeric' });
+      }
+      section.appendChild(title);
+
+      const row = document.createElement('div');
+      row.className = 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4';
+      months[key].forEach(ev => row.appendChild(createCard(ev)));
+      section.appendChild(row);
+      agendaContent.appendChild(section);
+    });
+  }
+
+  function filtrer() {
+    const filterValue = normalize(selecteur.value);
+    let filtered = allEvents;
+    if(filterValue) filtered = allEvents.filter(ev => ev.couleurs.some(c => normalize(c.nom) === filterValue));
+    showEvents(filtered);
+  }
+
+  selecteur.addEventListener('change', filtrer);
+  filtrer(); 
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  if(typeof evenements !== 'undefined') {
+    renderAccueil(evenements);
+    renderAgenda(evenements);
+  } else {
+    console.warn('Variable evenements non définie !');
+  }
+});
+</script>
+  <script>
+  document.getElementById("contactForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const resultat = document.getElementById("resultat");
+    const btn = form.querySelector("button[type='submit']");
+
+    
+    if (!form.checkValidity()) {
+      form.classList.add("was-validated");
+      return;
+    }
+
+    
+    btn.disabled = true;
+    btn.textContent = "Envoi en cours...";
+    resultat.innerHTML = '<div class="alert alert-info mt-3">⏳ Envoi en cours...</div>';
+
+    try {
+      const response = await fetch(
+        "https://script.google.com/macros/s/AKfycbyVCb94lLWno29TbmrqAovHDSRgQCulCM9ed3ZoHurupD20KC-MGgt-kjU-GqUBwn5U/exec",
+        {
+          method: "POST",
+          body: new FormData(form),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        resultat.innerHTML = `
+          <div class="alert alert-success mt-3 bg-primary text-white">
+            ✅ Message envoyé avec succès !
+          </div>`;
+        setTimeout(() => {
+          resultat.innerHTML = "";
+          form.reset();
+          form.classList.remove("was-validated");
+        }, 3000);
+      } else {
+        throw new Error(result.error || "Erreur inconnue");
+      }
+
+    } catch (err) {
+      resultat.innerHTML = `
+        <div class="alert alert-danger mt-3">
+          ❌ Erreur : ${err.message}
+        </div>`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Envoyer le message";
+    }
+  });
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
+
