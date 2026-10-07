@@ -1,8 +1,6 @@
 const CACHE_NAME = "consistoire-cache-v2";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
   "/site.webmanifest",
   "/favicon-96x96.png",
   "/favicon.svg",
